@@ -21,7 +21,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "FridayMovie"
 
-//enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":domain")
 include(":data")
