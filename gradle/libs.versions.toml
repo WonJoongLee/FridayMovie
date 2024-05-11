@@ -7,6 +7,7 @@ kotlin = "2.0.0-RC2"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
+androidxComposeCompiler = "1.5.8"
 espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.9.0"
@@ -31,6 +32,8 @@ androidx-lifecycle-runtimeTesting = { group = "androidx.lifecycle", name = "life
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -63,7 +66,8 @@ fridaymovie-android-application-compose = { id = "com.movie.application.compose"
 fridaymovie-android-application = { id = "com.movie.application", version = "unspecified"}
 fridaymovie-android-application-flavors = { id = "com.movie.application.flavors", version = "unspecified"}
 fridaymovie-android-hilt = { id = "com.movie.hilt", version = "unspecified"}
-fridaymovie-android-library = { id = "com.movie.library.compose", version = "unspecified"}
+fridaymovie-android-library = { id = "com.movie.library", version = "unspecified"}
+fridaymovie-android-library-compose = { id = "com.movie.library.compose", version = "unspecified"}
 fridaymovie-android-feature = { id = "com.movie.feature", version = "unspecified"}
 fridaymovie-android-test = { id = "com.movie.test", version = "unspecified"}
 
