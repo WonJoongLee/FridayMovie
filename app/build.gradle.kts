@@ -45,6 +45,8 @@ dependencies {
 
     implementation(projects.data)
     implementation(projects.domain)
+    implementation(projects.core.testing)
+    implementation(projects.core.strings)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
