@@ -1,6 +1,7 @@
 package com.movie.network.dto
 
 import com.movie.domain.domain.Movie
+import com.movie.domain.domain.MOVIE_IMAGE_BASE_URL
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,6 +28,10 @@ data class PopularMovieResponseDto(
         val voteAverage: Double = 0.0,
         @SerialName("vote_count")
         val voteCount: Int = -1,
+        @SerialName("backdrop_path")
+        val backdropPath: String = "",
+        @SerialName("poster_path")
+        val posterPath: String = ""
     ) {
         companion object {
             fun PopularMovieDto.toMovieDomain(): Movie {
@@ -38,6 +43,8 @@ data class PopularMovieResponseDto(
                     voteCount = voteCount,
                     popularityScore = popularity,
                     overView = overview,
+                    posterImageUrl = MOVIE_IMAGE_BASE_URL + posterPath,
+                    backDropImageUrl = MOVIE_IMAGE_BASE_URL + backdropPath
                 )
             }
         }

@@ -8,4 +8,6 @@ data class Movie(
     val voteCount: Int,
     val popularityScore: Double,
     val overView: String,
+    val posterImageUrl: String,
+    val backDropImageUrl: String,
 )
