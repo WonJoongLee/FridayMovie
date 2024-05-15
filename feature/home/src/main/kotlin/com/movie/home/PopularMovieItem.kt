@@ -30,8 +30,8 @@ internal fun PopularMovieItem(movie: Movie) {
             .aspectRatio(27f / 40f)
             .clip(RoundedCornerShape(6.dp))
             .border(
-                width = 0.5.dp,
-                color = colorResource(id = R.color.gray500),
+                width = 1.dp,
+                color = colorResource(id = R.color.gray700),
                 shape = RoundedCornerShape(6.dp)
             )
     ) {
