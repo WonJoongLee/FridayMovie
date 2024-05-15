@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.fridaymovie.android.application.compose)
     alias(libs.plugins.fridaymovie.android.application.flavors)
     alias(libs.plugins.fridaymovie.android.hilt)
+    alias(libs.plugins.secrets)
 }
 
 android {
@@ -34,10 +35,18 @@ android {
             )
         }
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+
+    secrets {
+        propertiesFileName = "secrets.properties"
+
+        ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+        ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
     }
 }
 

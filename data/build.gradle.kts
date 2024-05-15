@@ -1,8 +1,13 @@
 plugins {
-    alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.fridaymovie.android.library)
+    alias(libs.plugins.fridaymovie.android.hilt)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+android {
+    namespace = "com.movie.fridaymovie.data"
+}
+
+dependencies {
+    implementation(projects.domain)
+    implementation(projects.core.network)
 }

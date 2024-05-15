@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(projects.core.strings)
     implementation(projects.core.testing)
+    implementation(projects.domain)
 }
