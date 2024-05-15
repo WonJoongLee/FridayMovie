@@ -45,8 +45,15 @@ dependencies {
 
     implementation(projects.data)
     implementation(projects.domain)
+
+    // core
     implementation(projects.core.testing)
     implementation(projects.core.strings)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.navigation)
+
+    // features
+    implementation(projects.feature.home)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -56,6 +63,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.testing)
 
     ksp(libs.hilt.compiler)
     kspTest(libs.hilt.compiler)
