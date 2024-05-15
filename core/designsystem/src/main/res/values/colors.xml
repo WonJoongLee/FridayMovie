@@ -71,6 +71,7 @@
     <color name="gray600">#FF757575</color>
     <color name="gray700">#FF616161</color>
     <color name="gray800">#FF424242</color>
+    <color name="gray800_alpha50">#80424242</color>
     <color name="gray900">#FF212121</color>
     <color name="yellow50">#FFFFFDE7</color>
     <color name="yellow100">#FFFFF9C4</color>
