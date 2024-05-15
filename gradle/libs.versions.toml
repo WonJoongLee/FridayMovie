@@ -32,6 +32,7 @@ kotlinxSerializationJson = "1.6.3"
 okhttp = "4.12.0"
 secrets = "2.0.1"
 coil = "2.6.0"
+screenshot = "0.0.1-alpha01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -73,8 +74,8 @@ androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", versi
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -102,12 +103,12 @@ jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrai
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
-fridaymovie-android-application-compose = { id = "com.movie.application.compose", version = "unspecified"}
-fridaymovie-android-application = { id = "com.movie.application", version = "unspecified"}
-fridaymovie-android-application-flavors = { id = "com.movie.application.flavors", version = "unspecified"}
-fridaymovie-android-hilt = { id = "com.movie.hilt", version = "unspecified"}
-fridaymovie-android-library = { id = "com.movie.library", version = "unspecified"}
-fridaymovie-android-library-compose = { id = "com.movie.library.compose", version = "unspecified"}
-fridaymovie-android-feature = { id = "com.movie.feature", version = "unspecified"}
-fridaymovie-android-test = { id = "com.movie.test", version = "unspecified"}
-
+screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }
+fridaymovie-android-application-compose = { id = "com.movie.application.compose", version = "unspecified" }
+fridaymovie-android-application = { id = "com.movie.application", version = "unspecified" }
+fridaymovie-android-application-flavors = { id = "com.movie.application.flavors", version = "unspecified" }
+fridaymovie-android-hilt = { id = "com.movie.hilt", version = "unspecified" }
+fridaymovie-android-library = { id = "com.movie.library", version = "unspecified" }
+fridaymovie-android-library-compose = { id = "com.movie.library.compose", version = "unspecified" }
+fridaymovie-android-feature = { id = "com.movie.feature", version = "unspecified" }
+fridaymovie-android-test = { id = "com.movie.test", version = "unspecified" }

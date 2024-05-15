@@ -18,15 +18,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.movie.designsystem.core.designsystem.theme.FridayMovieTheme
 import com.movie.domain.domain.Movie
 import com.movie.fridaymovie.core.designsystem.R
 
 @Composable
-internal fun PopularMovieItem(movie: Movie) {
+internal fun PopularMovieItem(
+    modifier: Modifier = Modifier,
+    movie: Movie
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .aspectRatio(27f / 40f)
             .clip(RoundedCornerShape(6.dp))
             .border(
@@ -59,6 +64,29 @@ internal fun PopularMovieItem(movie: Movie) {
                     )
                 )
                 .padding(start = 4.dp, end = 4.dp, bottom = 2.dp)
+        )
+    }
+}
+
+@Preview(
+    showBackground = true
+)
+@Composable
+private fun PopularMovieItemPreview() {
+    val samplePopularMovie = Movie(
+        id = 1,
+        title = "Joker: Folie à Deux (2024)",
+        originalTitle = "",
+        voteAverage = 8.54,
+        voteCount = 145,
+        popularityScore = 0.0,
+        overView = "",
+        posterImageUrl = "",
+        backDropImageUrl = ""
+    )
+    FridayMovieTheme {
+        PopularMovieItem(
+            movie = samplePopularMovie
         )
     }
 }
