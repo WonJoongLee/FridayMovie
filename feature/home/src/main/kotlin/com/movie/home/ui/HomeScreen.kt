@@ -1,5 +1,8 @@
-package com.movie.home
+package com.movie.home.ui
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,9 +29,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.movie.fridaymovie.core.strings.R
 import com.movie.fridaymovie.core.designsystem.R as DesignSystemR
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+fun SharedTransitionScope.HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    onClickMovie: (
+        movieId: Long,
+        posterImageUrl: String,
+        movieTitle: String,
+    ) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -77,7 +87,11 @@ fun HomeScreen(
                     popularMovie.id
                 }
             ) { popularMovie ->
-                PopularMovieItem(movie = popularMovie)
+                PopularMovieItem(
+                    movie = popularMovie,
+                    onClick = onClickMovie,
+                    animatedVisibilityScope = animatedVisibilityScope
+                )
             }
         }
     }

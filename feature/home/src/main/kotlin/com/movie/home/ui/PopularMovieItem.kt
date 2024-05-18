@@ -1,7 +1,11 @@
-package com.movie.home
+package com.movie.home.ui
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -25,13 +29,23 @@ import com.movie.designsystem.core.designsystem.theme.FridayMovieTheme
 import com.movie.domain.domain.Movie
 import com.movie.fridaymovie.core.designsystem.R
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-internal fun PopularMovieItem(
+internal fun SharedTransitionScope.PopularMovieItem(
     modifier: Modifier = Modifier,
-    movie: Movie
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    movie: Movie,
+    onClick: (
+        movieId: Long,
+        posterImageUrl: String,
+        movieTitle: String,
+    ) -> Unit,
 ) {
     Box(
         modifier = modifier
+            .clickable {
+                onClick(movie.id, movie.posterImageUrl, movie.title)
+            }
             .aspectRatio(27f / 40f)
             .clip(RoundedCornerShape(6.dp))
             .border(
@@ -41,7 +55,12 @@ internal fun PopularMovieItem(
             )
     ) {
         AsyncImage(
-            modifier = Modifier.fillMaxHeight(),
+            modifier = Modifier
+                .sharedElement(
+                    state = rememberSharedContentState(key = movie.posterImageUrl),
+                    animatedVisibilityScope = animatedVisibilityScope
+                )
+                .fillMaxHeight(),
             model = movie.posterImageUrl,
             contentScale = ContentScale.Crop,
             contentDescription = null
@@ -85,8 +104,11 @@ private fun PopularMovieItemPreview() {
         backDropImageUrl = ""
     )
     FridayMovieTheme {
-        PopularMovieItem(
-            movie = samplePopularMovie
-        )
+        // todo need animatedVisibilityScope
+//        PopularMovieItem(
+//            movie = samplePopularMovie,
+//            animatedVisibilityScope = null,
+//            onClick = {}
+//        )
     }
 }

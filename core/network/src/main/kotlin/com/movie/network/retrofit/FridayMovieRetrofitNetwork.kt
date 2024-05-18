@@ -3,6 +3,7 @@ package com.movie.network.retrofit
 import androidx.tracing.trace
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.movie.network.FridayMovieNetworkDataSource
+import com.movie.network.dto.MovieDetailDto
 import com.movie.network.dto.PopularMovieResponseDto
 import kotlinx.serialization.json.Json
 import okhttp3.Call
@@ -36,6 +37,12 @@ internal class FridayMovieRetrofitNetwork @Inject constructor(
         return networkApi.getPopularMovies(
             language = language,
             page = page,
+        )
+    }
+
+    override suspend fun getMovie(movieId: Long): MovieDetailDto {
+        return networkApi.getMovie(
+            movieId = movieId
         )
     }
 }

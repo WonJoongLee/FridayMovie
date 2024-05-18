@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.movie.home"
+    namespace = "com.movie.fridaymovie.feature.detail"
 
     experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
@@ -14,8 +14,8 @@ dependencies {
     implementation(projects.core.strings)
     implementation(projects.core.testing)
     implementation(projects.core.navigation)
-    implementation(projects.domain)
     implementation(projects.core.designsystem)
+    implementation(projects.domain)
 
     screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }

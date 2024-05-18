@@ -1,5 +1,6 @@
 package com.movie.network
 
+import com.movie.network.dto.MovieDetailDto
 import com.movie.network.dto.PopularMovieResponseDto
 
 /**
@@ -10,4 +11,8 @@ interface FridayMovieNetworkDataSource {
         language: String = "en-US",
         page: Int = 1,
     ): PopularMovieResponseDto
+
+    suspend fun getMovie(
+        movieId: Long
+    ): MovieDetailDto
 }

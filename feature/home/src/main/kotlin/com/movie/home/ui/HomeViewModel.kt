@@ -1,4 +1,4 @@
-package com.movie.home
+package com.movie.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,5 +28,9 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun clickMovie(movieId: Long) {
+
     }
 }

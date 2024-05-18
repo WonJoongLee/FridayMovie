@@ -4,4 +4,5 @@ import com.movie.domain.domain.Movie
 
 interface MovieRepository {
     suspend fun getPopularMovies(): List<Movie>
+    suspend fun getMovie(movieId: Long): Movie
 }

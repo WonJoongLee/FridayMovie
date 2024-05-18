@@ -7,6 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.movie.designsystem.core.designsystem.theme.FridayMovieTheme
 import com.movie.domain.domain.Movie
+import com.movie.home.ui.PopularMovieItem
 
 class PopularMovieItemScreenShots {
 

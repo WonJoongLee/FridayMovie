@@ -28,6 +28,7 @@ private val LightColorScheme = lightColorScheme(
 fun FridayMovieTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true, // Dynamic color is available on Android 12+
+//    content: @Composable SharedTransitionScope.(AnimatedVisibilityScope) -> Unit
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

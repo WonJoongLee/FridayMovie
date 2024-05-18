@@ -1,4 +1,4 @@
-package com.movie.home
+package com.movie.home.ui
 
 import com.movie.domain.domain.Movie
 
