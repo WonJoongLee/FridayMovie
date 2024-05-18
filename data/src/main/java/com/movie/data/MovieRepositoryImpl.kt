@@ -1,6 +1,7 @@
 package com.movie.data
 
 import com.movie.domain.domain.Movie
+import com.movie.domain.domain.PopularMovie
 import com.movie.domain.repository.MovieRepository
 import com.movie.network.FridayMovieNetworkDataSource
 import com.movie.network.dto.MovieDetailDto.Companion.toMovieDomain
@@ -10,7 +11,7 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val networkDataSource: FridayMovieNetworkDataSource,
 ) : MovieRepository {
-    override suspend fun getPopularMovies(): List<Movie> {
+    override suspend fun getPopularMovies(): List<PopularMovie> {
         return networkDataSource.getPopularMovies().results.map {
             it.toMovieDomain()
         }

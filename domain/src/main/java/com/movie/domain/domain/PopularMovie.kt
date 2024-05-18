@@ -1,6 +1,6 @@
 package com.movie.domain.domain
 
-data class Movie(
+data class PopularMovie(
     val id: Long,
     val title: String,
     val originalTitle: String,
@@ -10,10 +10,9 @@ data class Movie(
     val overView: String,
     val posterImageUrl: String,
     val backDropImageUrl: String,
-    val status: String,
 ) {
     companion object {
-        val INITIAL = Movie(
+        val INITIAL = PopularMovie(
             id = -1,
             title = "",
             originalTitle = "",
@@ -23,7 +22,6 @@ data class Movie(
             overView = "",
             posterImageUrl = "",
             backDropImageUrl = "",
-            status = ""
         )
     }
 }

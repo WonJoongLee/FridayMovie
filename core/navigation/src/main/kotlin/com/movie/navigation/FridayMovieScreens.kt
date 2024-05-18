@@ -22,7 +22,7 @@ sealed class FridayMovieScreens(
             navArgument(DETAIL_ITEM_ID_PARAMETER) {
                 type = NavType.LongType
                 nullable = false
-                defaultValue = -1
+                defaultValue = -1L
             },
             navArgument(DETAIL_ITEM_POSTER_IMAGE_URL_PARAMETER) {
                 type = NavType.StringType
@@ -41,7 +41,7 @@ sealed class FridayMovieScreens(
             posterImageUrl: String,
             movieTitle: String,
         ): String =
-            "detail?{$DETAIL_ITEM_ID_PARAMETER}=$movieId" +
+            "detail?$DETAIL_ITEM_ID_PARAMETER=$movieId" +
                     "&$DETAIL_ITEM_POSTER_IMAGE_URL_PARAMETER=$posterImageUrl" +
                     "&$DETAIL_ITEM_MOVIE_TITLE_PARAMETER=$movieTitle"
     }

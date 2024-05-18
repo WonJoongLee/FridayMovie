@@ -3,14 +3,19 @@ package com.movie.detail
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
+import com.movie.detail.ui.MovieOverView
+import com.movie.detail.ui.MovieRate
+import com.movie.detail.ui.TopMovieInfo
+import com.movie.fridaymovie.core.designsystem.R as DesignSystemR
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -20,23 +25,26 @@ fun SharedTransitionScope.MovieDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Column {
-        AsyncImage(
-            modifier = Modifier
-                .sharedElement(
-                    state = rememberSharedContentState(key = uiState.posterImageUrl),
-                    animatedVisibilityScope = animatedVisibilityScope,
-                ),
-            model = uiState.posterImageUrl,
-            contentDescription = null,
-        )
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                color = colorResource(id = DesignSystemR.color.gray900)
+            )
+    ) {
+        item {
+            TopMovieInfo(
+                animatedVisibilityScope = animatedVisibilityScope,
+                uiState = uiState
+            )
+        }
 
-        Text(
-            modifier = Modifier.sharedBounds(
-                sharedContentState = rememberSharedContentState(key = uiState.title),
-                animatedVisibilityScope = animatedVisibilityScope
-            ),
-            text = uiState.title
-        )
+        item {
+            MovieRate(uiState = uiState)
+        }
+
+        item {
+            MovieOverView(uiState = uiState)
+        }
     }
 }

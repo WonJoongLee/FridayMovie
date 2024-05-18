@@ -1,16 +1,14 @@
 package com.movie.detail.ui
 
+import com.movie.domain.domain.Movie
+
 data class MovieDetailUiState(
-    val id: Long,
-    val title: String,
-    val posterImageUrl: String
+    val movie: Movie
 ) {
     companion object {
         val INITIAL: MovieDetailUiState
             get() = MovieDetailUiState(
-                id = -1,
-                title = "",
-                posterImageUrl = ""
+                Movie.INITIAL
             )
     }
 }

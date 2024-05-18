@@ -24,7 +24,9 @@ data class MovieDetailDto(
     @SerialName("backdrop_path")
     val backdropPath: String = "",
     @SerialName("poster_path")
-    val posterPath: String = ""
+    val posterPath: String = "",
+    @SerialName("status")
+    val status: String = ""
 ) {
     companion object {
         fun MovieDetailDto.toMovieDomain(): Movie {
@@ -37,7 +39,8 @@ data class MovieDetailDto(
                 popularityScore = popularity,
                 overView = overview,
                 posterImageUrl = MOVIE_IMAGE_BASE_URL + posterPath,
-                backDropImageUrl = MOVIE_IMAGE_BASE_URL + backdropPath
+                backDropImageUrl = MOVIE_IMAGE_BASE_URL + backdropPath,
+                status = status
             )
         }
     }

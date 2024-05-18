@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.movie.designsystem.core.designsystem.theme.FridayMovieTheme
-import com.movie.domain.domain.Movie
+import com.movie.domain.domain.PopularMovie
 import com.movie.fridaymovie.core.designsystem.R
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -36,7 +36,7 @@ import com.movie.fridaymovie.core.designsystem.R
 internal fun SharedTransitionScope.PopularMovieItem(
     modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    movie: Movie,
+    movie: PopularMovie,
     onClick: (
         movieId: Long,
         posterImageUrl: String,
@@ -100,7 +100,7 @@ internal fun SharedTransitionScope.PopularMovieItem(
 )
 @Composable
 private fun PopularMovieItemPreview() {
-    val samplePopularMovie = Movie(
+    val samplePopularMovie = PopularMovie(
         id = 1,
         title = "Joker: Folie à Deux (2024)",
         originalTitle = "",
@@ -109,7 +109,7 @@ private fun PopularMovieItemPreview() {
         popularityScore = 0.0,
         overView = "",
         posterImageUrl = "",
-        backDropImageUrl = ""
+        backDropImageUrl = "",
     )
     FridayMovieTheme {
         SharedTransitionScope {
