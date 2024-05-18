@@ -45,6 +45,10 @@ internal fun SharedTransitionScope.PopularMovieItem(
 ) {
     Box(
         modifier = modifier
+            .sharedElement(
+                state = rememberSharedContentState(key = movie.posterImageUrl),
+                animatedVisibilityScope = animatedVisibilityScope
+            )
             .clickable {
                 onClick(movie.id, movie.posterImageUrl, movie.title)
             }
@@ -57,12 +61,7 @@ internal fun SharedTransitionScope.PopularMovieItem(
             )
     ) {
         AsyncImage(
-            modifier = Modifier
-                .sharedElement(
-                    state = rememberSharedContentState(key = movie.posterImageUrl),
-                    animatedVisibilityScope = animatedVisibilityScope
-                )
-                .fillMaxHeight(),
+            modifier = Modifier.fillMaxHeight(),
             model = movie.posterImageUrl,
             contentScale = ContentScale.Crop,
             contentDescription = null
