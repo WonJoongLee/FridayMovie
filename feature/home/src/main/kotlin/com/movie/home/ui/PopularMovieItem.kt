@@ -1,5 +1,7 @@
 package com.movie.home.ui
 
+import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -87,6 +89,9 @@ internal fun SharedTransitionScope.PopularMovieItem(
     }
 }
 
+// should fix preview not showing correctly because of SharedTransitionScope
+@OptIn(ExperimentalSharedTransitionApi::class)
+@SuppressLint("UnusedContentLambdaTargetStateParameter")
 @Preview(
     showBackground = true
 )
@@ -104,11 +109,17 @@ private fun PopularMovieItemPreview() {
         backDropImageUrl = ""
     )
     FridayMovieTheme {
-        // todo need animatedVisibilityScope
-//        PopularMovieItem(
-//            movie = samplePopularMovie,
-//            animatedVisibilityScope = null,
-//            onClick = {}
-//        )
+        SharedTransitionScope {
+            AnimatedContent(
+                targetState = 100,
+                label = ""
+            ) { _ ->
+                PopularMovieItem(
+                    movie = samplePopularMovie,
+                    animatedVisibilityScope = this,
+                    onClick = { _, _, _ -> }
+                )
+            }
+        }
     }
 }
