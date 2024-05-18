@@ -1,6 +1,5 @@
 package com.movie.detail
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -22,8 +21,6 @@ fun SharedTransitionScope.MovieDetailScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column {
-        Log.e("@@@", "screen posterImageUrl : ${uiState.posterImageUrl}")
-        Log.e("@@@", "screen title : ${uiState.title}")
         AsyncImage(
             modifier = Modifier
                 .sharedElement(
@@ -34,6 +31,12 @@ fun SharedTransitionScope.MovieDetailScreen(
             contentDescription = null,
         )
 
-        Text(text = "Movie Detail Screen")
+        Text(
+            modifier = Modifier.sharedBounds(
+                sharedContentState = rememberSharedContentState(key = uiState.title),
+                animatedVisibilityScope = animatedVisibilityScope
+            ),
+            text = uiState.title
+        )
     }
 }

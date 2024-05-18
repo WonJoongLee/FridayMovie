@@ -73,6 +73,10 @@ internal fun SharedTransitionScope.PopularMovieItem(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
+                .sharedBounds(
+                    sharedContentState = rememberSharedContentState(key = movie.title),
+                    animatedVisibilityScope = animatedVisibilityScope
+                )
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .background(
