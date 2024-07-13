@@ -37,6 +37,8 @@ secrets.properties
 /.idea/codeStyles/*
 !/.idea/codeStyles/Project.xml
 !/.idea/codeStyles/codeStyleConfig.xml
+!/.idea/icon.svg
+!/.idea/icon_dark.svg
 
 # Gradle cache
 .gradle
