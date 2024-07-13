@@ -1,7 +1,7 @@
 # Friday Movie
 A simple app that displays movie information, providing users with easy access to movie details including ratings, summaries, and more.
 
-## Noteworthy tech stack
+## Featured tech stack
 ### Shared Element Transitions in Compose
 https://github.com/user-attachments/assets/7742c3e3-bf0c-432b-82ea-ab6382100ed3
 
