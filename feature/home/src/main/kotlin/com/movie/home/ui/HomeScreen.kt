@@ -25,10 +25,12 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.movie.designsystem.core.designsystem.theme.FridayMovieTheme
 import com.movie.fridaymovie.core.strings.R
 import com.movie.fridaymovie.core.designsystem.R as DesignSystemR
 
@@ -58,20 +60,8 @@ fun SharedTransitionScope.HomeScreen(
                     scrolledContainerColor = colorResource(id = DesignSystemR.color.gray800)
                 ),
                 title = {
-                    Text(
-                        modifier = Modifier
-                            .padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
-                        text = stringResource(id = R.string.main_top_app_name),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 28.sp,
-                        style = TextStyle(
-                            brush = Brush.horizontalGradient(
-                                colors = listOf(
-                                    colorResource(id = DesignSystemR.color.yellow900),
-                                    colorResource(id = DesignSystemR.color.yellow500)
-                                ),
-                            )
-                        )
+                    HomeScreenTitle(
+                        modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
                     )
                 },
                 scrollBehavior = scrollBehavior
@@ -100,5 +90,31 @@ fun SharedTransitionScope.HomeScreen(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun HomeScreenTitle(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier,
+        text = stringResource(id = R.string.main_top_app_name),
+        fontWeight = FontWeight.Bold,
+        fontSize = 28.sp,
+        style = TextStyle(
+            brush = Brush.horizontalGradient(
+                colors = listOf(
+                    colorResource(id = DesignSystemR.color.yellow900),
+                    colorResource(id = DesignSystemR.color.yellow500)
+                ),
+            )
+        )
+    )
+}
+
+@Preview
+@Composable
+private fun HomeScreenTitlePreview() {
+    FridayMovieTheme {
+        HomeScreenTitle()
     }
 }
