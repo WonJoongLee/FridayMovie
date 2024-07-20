@@ -111,10 +111,15 @@ private fun HomeScreenTitle(modifier: Modifier = Modifier) {
     )
 }
 
-@Preview
+@Preview(
+    showBackground = true,
+    backgroundColor = 0xFF424242
+)
 @Composable
 private fun HomeScreenTitlePreview() {
     FridayMovieTheme {
-        HomeScreenTitle()
+        HomeScreenTitle(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
     }
 }
