@@ -20,12 +20,15 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val movieList = movieRepository.getPopularMovies()
-            _uiState.update {
-                it.copy(
-                    isLoading = false,
-                    popularMovies = movieList
-                )
+            runCatching {
+                movieRepository.getPopularMovies()
+            }.onSuccess { movieList ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        popularMovies = movieList
+                    )
+                }
             }
         }
     }
