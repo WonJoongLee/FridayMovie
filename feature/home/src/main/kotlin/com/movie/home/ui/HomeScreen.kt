@@ -17,6 +17,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -47,6 +48,20 @@ fun SharedTransitionScope.HomeScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
+    LaunchedEffect(Unit) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                is HomeSideEffect.ClickMovie -> {
+                    onClickMovie(
+                        sideEffect.movieId,
+                        sideEffect.posterImageUrl,
+                        sideEffect.movieTitle,
+                    )
+                }
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier
@@ -85,7 +100,15 @@ fun SharedTransitionScope.HomeScreen(
             ) { popularMovie ->
                 PopularMovieItem(
                     movie = popularMovie,
-                    onClick = onClickMovie,
+                    onClick = { movieId: Long, posterImageUrl: String, movieTitle: String ->
+                        viewModel.onUserIntent(
+                            HomeUserIntent.ClickMovie(
+                                movieId,
+                                posterImageUrl,
+                                movieTitle
+                            )
+                        )
+                    },
                     animatedVisibilityScope = animatedVisibilityScope
                 )
             }
