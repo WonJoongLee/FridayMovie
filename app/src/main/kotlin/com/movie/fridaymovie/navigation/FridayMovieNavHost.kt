@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.movie.detail.MovieDetailScreen
 import com.movie.detail.navigation.navigateToMovieDetail
-import com.movie.home.ui.HomeScreen
+import com.movie.home.ui.HomeRoute
 import com.movie.navigation.FridayMovieScreens
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -20,7 +20,7 @@ fun FridayMovieNavHost(navHostController: NavHostController) {
             startDestination = FridayMovieScreens.Home.route
         ) {
             composable(route = FridayMovieScreens.Home.route) {
-                HomeScreen(
+                HomeRoute(
                     animatedVisibilityScope = this@composable,
                     onClickMovie = navHostController::navigateToMovieDetail
                 )

@@ -1,7 +1,9 @@
 package com.movie.home.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,12 +34,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.movie.designsystem.core.designsystem.theme.FridayMovieTheme
+import com.movie.domain.domain.PopularMovie
 import com.movie.fridaymovie.core.strings.R
 import com.movie.fridaymovie.core.designsystem.R as DesignSystemR
 
-@OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.HomeScreen(
+fun SharedTransitionScope.HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     animatedVisibilityScope: AnimatedVisibilityScope,
     onClickMovie: (
@@ -47,7 +50,6 @@ fun SharedTransitionScope.HomeScreen(
     ) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
@@ -62,6 +64,30 @@ fun SharedTransitionScope.HomeScreen(
             }
         }
     }
+
+    HomeScreen(
+        uiState = uiState,
+        animatedVisibilityScope = animatedVisibilityScope,
+        onClickMovie = { movieId: Long, posterImageUrl: String, movieTitle: String ->
+            viewModel.onUserIntent(
+                HomeUserIntent.ClickMovie(
+                    movieId,
+                    posterImageUrl,
+                    movieTitle
+                )
+            )
+        }
+    )
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
+@Composable
+fun SharedTransitionScope.HomeScreen(
+    uiState: HomeUiState,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    onClickMovie: (movieId: Long, posterImageUrl: String, movieTitle: String) -> Unit,
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         modifier = Modifier
@@ -100,15 +126,7 @@ fun SharedTransitionScope.HomeScreen(
             ) { popularMovie ->
                 PopularMovieItem(
                     movie = popularMovie,
-                    onClick = { movieId: Long, posterImageUrl: String, movieTitle: String ->
-                        viewModel.onUserIntent(
-                            HomeUserIntent.ClickMovie(
-                                movieId,
-                                posterImageUrl,
-                                movieTitle
-                            )
-                        )
-                    },
+                    onClick = onClickMovie,
                     animatedVisibilityScope = animatedVisibilityScope
                 )
             }
@@ -132,6 +150,42 @@ private fun HomeScreenTitle(modifier: Modifier = Modifier) {
             )
         )
     )
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Preview
+@Composable
+private fun HomeScreenPreview() {
+    SharedTransitionLayout {
+        AnimatedVisibility(visible = true) {
+            val movieList = buildList {
+                (0..10).forEach {
+                    add(
+                        PopularMovie(
+                            id = it.toLong(),
+                            title = "Movie $it title",
+                            posterImageUrl = "https://example.com/poster$it.jpg",
+                            originalTitle = "Movie $it original title",
+                            voteAverage = 5.0,
+                            voteCount = 100,
+                            popularityScore = 100.0,
+                            overView = "Overview of Movie $it",
+                            backDropImageUrl = "https://example",
+                        )
+                    )
+                }
+            }
+
+            HomeScreen(
+                uiState = HomeUiState(
+                    popularMovies = movieList,
+                    isLoading = false,
+                ),
+                animatedVisibilityScope = this,
+                onClickMovie = { _, _, _ -> },
+            )
+        }
+    }
 }
 
 @Preview(
