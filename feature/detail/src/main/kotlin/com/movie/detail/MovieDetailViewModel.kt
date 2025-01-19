@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.movie.detail.ui.MovieDetailUiState
 import com.movie.domain.domain.Movie
 import com.movie.domain.repository.MovieRepository
-import com.movie.navigation.DETAIL_ITEM_ID_PARAMETER
-import com.movie.navigation.DETAIL_ITEM_MOVIE_TITLE_PARAMETER
-import com.movie.navigation.DETAIL_ITEM_POSTER_IMAGE_URL_PARAMETER
+import com.movie.navigation.DETAIL_MOVIE_ID_PARAMETER
+import com.movie.navigation.DETAIL_MOVIE_POSTER_IMAGE_URL_PARAMETER
+import com.movie.navigation.DETAIL_MOVIE_TITLE_PARAMETER
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,10 +21,10 @@ class MovieDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val movieId = savedStateHandle.get<Long>(DETAIL_ITEM_ID_PARAMETER)
+    private val movieId = savedStateHandle.get<Long>(DETAIL_MOVIE_ID_PARAMETER)
     private val posterImageUrl =
-        savedStateHandle.get<String>(DETAIL_ITEM_POSTER_IMAGE_URL_PARAMETER)
-    private val movieTitle = savedStateHandle.get<String>(DETAIL_ITEM_MOVIE_TITLE_PARAMETER)
+        savedStateHandle.get<String>(DETAIL_MOVIE_POSTER_IMAGE_URL_PARAMETER)
+    private val movieTitle = savedStateHandle.get<String>(DETAIL_MOVIE_TITLE_PARAMETER)
     private val _uiState = MutableStateFlow(
         MovieDetailUiState.INITIAL.copy(
             movie = Movie.INITIAL.copy(
