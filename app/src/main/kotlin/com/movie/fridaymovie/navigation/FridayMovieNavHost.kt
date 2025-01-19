@@ -7,7 +7,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.movie.detail.MovieDetailScreen
-import com.movie.detail.navigation.navigateToMovieDetail
 import com.movie.home.ui.HomeRoute
 import com.movie.navigation.FridayMovieScreens
 
@@ -22,17 +21,20 @@ fun FridayMovieNavHost(navHostController: NavHostController) {
             composable(route = FridayMovieScreens.Home.route) {
                 HomeRoute(
                     animatedVisibilityScope = this@composable,
-                    onClickMovie = navHostController::navigateToMovieDetail
+                    onClickMovie = { movieId: Long, posterImageUrl: String, movieTitle: String ->
+                        navHostController.navigate(
+                            FridayMovieScreens.Detail(
+                                movieId = movieId,
+                                posterImageUrl = posterImageUrl,
+                                movieTitle = movieTitle
+                            )
+                        )
+                    }
                 )
             }
 
-            composable(
-                route = FridayMovieScreens.Detail.name,
-                arguments = FridayMovieScreens.Detail.navArguments
-            ) {
-                MovieDetailScreen(
-                    animatedVisibilityScope = this@composable,
-                )
+            composable<FridayMovieScreens.Detail> {
+                MovieDetailScreen(animatedVisibilityScope = this@composable)
             }
         }
     }
