@@ -1,0 +1,50 @@
+name: Update Screenshot
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+     - main
+
+jobs:
+  update_screenshot:
+    name: Update Screenshot
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          name: Checkout repository
+
+      - uses: actions/setup-java@v4
+        with:
+          name: Setup JDK 19
+          distribution: 'zulu'
+          java-version: '19'
+
+      - name: Setup Android environment
+        uses: android-actions/setup-android@v2
+
+      - name: Create local.properties
+        run: |
+          echo "sdk.dir=/usr/local/lib/android/sdk" > local.properties
+
+      - name: Setup Secrets
+        shell: bash
+        run: |
+          echo TMDB_API_KEY=$TMDB_API_KEY > ./secrets.properties
+
+      - name: Run update screenshot
+        run: ./gradlew updateDemoScreenshotTest
+
+      - name: Configure git for push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/WonJoongLee/FridayMoviePrivate.git
+
+      - name: Push screenshot
+        run: |
+          git add .
+          git commit -m "🤖 Update Screenshot"
+          git push origin $(git branch --show-current)
