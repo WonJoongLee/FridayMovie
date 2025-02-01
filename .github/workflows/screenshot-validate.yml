@@ -1,0 +1,146 @@
+name: Validate Screenshot
+
+on:
+  pull_request:
+    paths:
+      - '**/*'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update_screenshot:
+    name: Update Screenshot
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 19
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '19'
+
+      - name: Setup Android environment
+        uses: android-actions/setup-android@v2
+
+      - name: Create local.properties
+        shell: bash
+        run: |
+          echo "sdk.dir=/usr/local/lib/android/sdk" > local.properties
+
+      - name: Setup secrets
+        shell: bash
+        run: |
+          echo TMDB_API_KEY=$TMDB_API_KEY > ./secrets.properties
+
+      - name: Run update screenshot
+        run: ./gradlew validateDemoScreenshotTest
+        continue-on-error: true
+
+      - name: Find all screenshot test results
+        id: find_results
+        run: |
+          find . -type f -iname "*.png" -path "*/rendered/*" > rendered_results.txt
+          find . -type f -iname "*.png" -path "*/diffs/*" > diffs_results.txt
+          echo "rendered_results : $(cat rendered_results.txt)"
+          echo "diffs_results : $(cat diffs_results.txt)"
+          if [ -s rendered_results.txt ]; then
+            echo "results_found=true" >> $GITHUB_ENV
+          else
+            echo "results_found=false" >> $GITHUB_ENV
+          fi
+
+      - name: Create companion branch and push images
+        if: env.results_found == 'true'
+        run: |
+          BRANCH_NAME="companion_${{ github.event.pull_request.head.ref }}"
+          BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/[^a-zA-Z0-9_-]/_/g')
+          echo "Creating branch: $BRANCH_NAME"
+          
+          git branch -D "$BRANCH_NAME" || true
+          git checkout --orphan "$BRANCH_NAME"
+          git rm -rf .
+
+          files_to_add=$(cat rendered_results.txt diffs_results.txt)
+          echo "Files to add:"
+          echo "$files_to_add" || echo "No files to add."
+          
+          for file in $files_to_add; do
+            if [[ "$file" =~ ^[a-zA-Z0-9_./-]+$ ]]; then
+              echo "Adding file: $file"
+              git add "$file"
+            else
+              echo "Skipping invalid file: $file"
+            fi
+          done
+
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Add screenshot diff results"
+          git push origin HEAD:"$BRANCH_NAME" -f
+          echo "Pushed branch: $BRANCH_NAME"
+
+      - id: generate-diff-reports
+        name: Generate diff reports
+        if: env.results_found == 'true'
+        run: |
+          delimiter="$(openssl rand -hex 8)"
+          
+          rendered_results=$(cat rendered_results.txt)
+          diffs_results=$(cat diffs_results.txt)
+          
+          rendered_array=($rendered_results)
+          diffs_array=($diffs_results)
+          echo "diffs_array: ${diffs_array[@]}"
+          
+          echo "Generating markdown table for paired results:"
+          echo "Rendered results:"
+          echo "$rendered_results"
+          echo "Diff results:"
+          echo "$diffs_results"
+          
+          {
+            echo "markdown_table<<${delimiter}"
+          
+            echo "| Rendered File | Rendered Image | Diff Image |"
+            echo "|---------------|----------------|------------|"
+          
+            for i in "${!rendered_array[@]}"; do
+              rendered_file="${rendered_array[$i]}"
+              diff_file="${diffs_array[$i]:-}"
+          
+              rendered_file_name=$(basename "$rendered_file" | sed -r 's/(.{20})/\1<br>/g')
+              rendered_url_part="companion_${{ github.event.pull_request.head.ref }}/${rendered_file//#/%23}"
+          
+              diff_file_name=""
+              diff_url_part=""
+              if [ -n "$diff_file" ]; then
+                diff_file_name=$(basename "$diff_file" | sed -r 's/(.{20})/\1<br>/g')
+                diff_url_part="companion_${{ github.event.pull_request.head.ref }}/${diff_file//#/%23}"
+              fi
+          
+              echo "| [$rendered_file_name](https://github.com/${{ github.repository }}/blob/$rendered_url_part) | ![](https://github.com/${{ github.repository }}/blob/$rendered_url_part?raw=true) | ![](https://github.com/${{ github.repository }}/blob/$diff_url_part?raw=true) |"
+            done
+          
+            echo "${delimiter}"
+          } >> "$GITHUB_OUTPUT"
+          echo "Markdown table generated successfully."
+
+
+      - name: Post comment to Pull Request
+        if: env.results_found == 'true'
+        run: |
+          markdown_table="${{ steps.generate-diff-reports.outputs.markdown_table }}"
+          echo "Posting the following markdown table as a comment:"
+          echo "$markdown_table"
+          
+          body="**Screenshot Test Results**"$'\n'"$markdown_table"
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "$(jq -n --arg body "$body" '{ body: $body }')" \
+            ${{ github.event.pull_request.comments_url }}

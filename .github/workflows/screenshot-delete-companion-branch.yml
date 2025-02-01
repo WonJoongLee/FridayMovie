@@ -1,0 +1,39 @@
+name: Delete Companion Branch
+
+on:
+  pull_request:
+    types:
+      - closed
+
+permissions:
+  contents: write
+
+jobs:
+  delete_companion_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if PR was merged
+        id: check_merge
+        run: |
+          if [ "${{ github.event.pull_request.merged }}" = "true" ]; then
+            echo "PR was merged. Proceeding with branch deletion."
+            echo "DELETE_BRANCH=true" >> $GITHUB_ENV
+          else
+            echo "PR was not merged. Skipping branch deletion."
+            echo "DELETE_BRANCH=false" >> $GITHUB_ENV
+
+      - name: Delete companion branch
+        if: env.DELETE_BRANCH == 'true'
+        run: |
+          if git ls-remote --exit-code --heads origin "$TARGET_BRANCH"; then
+            echo "Deleting branch: $TARGET_BRANCH"
+            git push origin --delete "$TARGET_BRANCH"
+          else
+            echo "Branch $TARGET_BRANCH does not exist. Skipping deletion."
+          fi
