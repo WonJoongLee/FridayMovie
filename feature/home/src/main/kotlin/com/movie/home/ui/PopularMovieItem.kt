@@ -55,7 +55,7 @@ internal fun SharedTransitionScope.PopularMovieItem(
             .aspectRatio(27f / 40f)
             .clip(RoundedCornerShape(6.dp))
             .border(
-                width = 1.dp,
+                width = 2.dp,
                 color = colorResource(id = R.color.gray700),
                 shape = RoundedCornerShape(6.dp)
             )
