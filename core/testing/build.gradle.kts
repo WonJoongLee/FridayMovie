@@ -18,4 +18,6 @@ dependencies {
     implementation(libs.hilt.android.testing)
     implementation(libs.kotlinx.coroutines.test)
     implementation(libs.kotlinx.datetime)
+
+    implementation(projects.domain)
 }
