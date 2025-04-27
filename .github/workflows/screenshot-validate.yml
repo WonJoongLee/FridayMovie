@@ -53,9 +53,14 @@ jobs:
           else
             echo "results_found=false" >> $GITHUB_ENV
           fi
+          if [ -s diffs_results.txt ]; then
+            echo "diffs_found=true" >> $GITHUB_ENV
+          else
+            echo "diffs_found=false" >> $GITHUB_ENV
+          fi
 
       - name: Create companion branch and push images
-        if: env.results_found == 'true'
+        if: env.results_found == 'true' && env.diffs_found == 'true'
         run: |
           BRANCH_NAME="companion_${{ github.event.pull_request.head.ref }}"
           BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/[^a-zA-Z0-9_-]/_/g')
@@ -86,7 +91,7 @@ jobs:
 
       - id: generate-diff-reports
         name: Generate diff reports
-        if: env.results_found == 'true'
+        if: env.results_found == 'true' && env.diffs_found == 'true'
         run: |
           delimiter="$(openssl rand -hex 8)"
           
@@ -132,7 +137,7 @@ jobs:
 
 
       - name: Post comment to Pull Request
-        if: env.results_found == 'true'
+        if: env.results_found == 'true' && env.diffs_found == 'true'
         run: |
           markdown_table="${{ steps.generate-diff-reports.outputs.markdown_table }}"
           echo "Posting the following markdown table as a comment:"
